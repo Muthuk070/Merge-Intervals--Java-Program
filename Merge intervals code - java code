@@ -1,0 +1,86 @@
+
+
+package JAVA01;
+import java.util.*;
+import java.util.stream.IntStream;
+
+public class firstclass {
+	
+	static int y=0;
+	public List<int[]> mergeOverlap(int[][] arr) {
+		Arrays.sort(arr, (a, b) -> Integer.compare(a[0], b[0]));// sorted each array for 0th index value
+		
+		for(int i=0;i<arr.length-1;i++) {                        //sorted each array for 1st index value
+			for(int j=i+1;j<=arr.length-1;j++) {
+				if(arr[i][1]>=arr[j][1]) {
+					int t=arr[i][1];
+					arr[i][1]=arr[j][1];
+					arr[j][1]=t;
+				}
+			}
+		}
+		System.out.println("Each value Sorted Array");
+		System.out.println(Arrays.deepToString(arr));
+		System.out.println();
+		
+		List<int[]> mergedList = new ArrayList<>();
+		if(arr.length!=1) {
+			y=arr[1][0];//2
+			int pp=0;
+			for(int i=1;i<=arr.length-1;i++) {//1<=0
+				if(arr[i][0]!=-1&&arr[i][1]!=-1)
+					if(y<=arr[pp][1]) {//15<=10
+						arr[pp][1]=arr[i][1];//6
+						arr[i][1]=-1;
+						arr[i][0]=-1;
+						if(i+1<=arr.length-1) {//
+							y=arr[i+1][0];//8
+							}
+					}
+					else {
+						pp=i;//3
+						int p=i+1;//4
+						if(p<=arr.length-1) {
+							y=arr[p][0];//15
+						}
+					}
+			}
+			
+			for (int[] u : arr) {
+				if (u[0] != -1) {
+					mergedList.add(new int[] {u[0],u[1]});
+				}
+			}
+		}
+		else{
+			mergedList.add(arr[0]);
+		}
+		
+		List<int[]> list = mergedList;
+		List<int[]> interval =list;
+		return interval;
+	}
+	
+public static void main(String [] args) {
+
+    int arr[][ ]= {{8,14},{2,6},{8,8},{12,12},{11,13},{12,17},{13,17}};
+    // int arr[][]= {{6,11}};
+    
+    firstclass call =new firstclass();
+   List <int []>j=call.mergeOverlap(arr);
+   for(int h[]:j) {
+    System.out.print(Arrays.toString(h));
+   }
+   
+     
+}
+}
+
+
+
+
+OUTPUT:
+Each value Sorted Array
+[[2, 6], [8, 8], [8, 12], [11, 13], [12, 14], [12, 17], [13, 17]]
+
+[2, 6][8, 17]
